@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import classes from "./Button.module.scss";
 
 const Button = (props) => {
+  console.log("rendering button...");
   let buttonStyles = null;
   switch (props.buttonType) {
     case "pill":
@@ -32,6 +33,8 @@ const Button = (props) => {
     case "bottom":
       buttonStyles.marginBottom = "1rem";
       break;
+    default:
+      break;
   }
 
   return (
@@ -41,6 +44,7 @@ const Button = (props) => {
         style={buttonStyles}
         type={props.type}
         onClick={props.onClickHandler}
+        disabled={props.disabled}
       >
         {props.label}
       </button>
@@ -48,4 +52,4 @@ const Button = (props) => {
   );
 };
 
-export default Button;
+export default memo(Button);

@@ -9,7 +9,7 @@ const Home = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    props.loadProjects();
+    if (!props.initialProjectsFetched) props.loadProjects();
   }, []);
 
   let mainClasses = "";
@@ -20,7 +20,7 @@ const Home = (props) => {
     projects = (
       <Fragment>
         {props.projects.map((project) => (
-          <p key={project.id}>{project.name}</p>
+          <p key={project.id}>{project.projectName}</p>
         ))}
       </Fragment>
     );
@@ -57,7 +57,8 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    projects: state.projects,
+    projects: state.project.projects,
+    initialProjectsFetched: state.project.initialProjectsFetched,
   };
 };
 

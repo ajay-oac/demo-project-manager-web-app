@@ -21,4 +21,17 @@
   &:hover {
     transform: scale(1.008);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.31)
+    );
+
+    &:hover {
+      transform: none;
+    }
+  }
 }

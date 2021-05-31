@@ -5,11 +5,15 @@ import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  projects: projectReducer,
+  project: projectReducer,
 });
 
 const middlewares = applyMiddleware(thunk);
 
 const store = createStore(rootReducer, middlewares);
+
+store.subscribe(() => {
+  console.log(store.getState().projects);
+});
 
 export default store;

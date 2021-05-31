@@ -1,13 +1,22 @@
 import * as projectActions from "./projectActions.js";
 
-const initialProjects = [];
+const initialProjects = {
+  projects: [],
+  initialProjectsFetched: false,
+};
 
 const projectReducer = (state = initialProjects, { type, payload }) => {
   switch (type) {
     case projectActions.LOAD_PROJECTS:
-      return [...payload.projects];
+      return {
+        initialProjectsFetched: true,
+        projects: [...payload.projects],
+      };
     case projectActions.CREATE_PROJECT:
-      return [...state, payload.newProject];
+      return {
+        ...state,
+        projects: [...state.projects, payload.newProject],
+      };
     default:
       return state;
   }
