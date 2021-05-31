@@ -1,0 +1,36 @@
+@import "../../variables.scss";
+
+.add-project-button {
+  padding: 1rem;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: rotate(180deg);
+  }
+}
+
+.no-projects-main {
+  height: calc(100vh - 175px);
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    span:first-child {
+      color: $red-variant-1;
+      font-size: 50px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    span:last-child {
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+  }
+}

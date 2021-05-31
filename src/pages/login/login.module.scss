@@ -1,0 +1,24 @@
+.login-modal {
+  margin: 9rem auto 0 auto;
+  width: 55vw;
+  max-width: 1120px !important;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .login-illustration {
+    max-width: 38%;
+
+    img {
+      display: inline-block;
+      object-fit: contain;
+      max-width: 100%;
+    }
+  }
+
+  .login-form {
+    width: 45%;
+    height: 25rem;
+  }
+}

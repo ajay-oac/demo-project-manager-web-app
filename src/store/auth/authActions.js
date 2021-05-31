@@ -1,0 +1,4 @@
+export const SET_USERNAME = "SET_USERNAME";
+export const SET_IS_AUTHENTICATED = "SET_IS_AUTHENTICATED";
+export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
+export const SET_USER_IMAGE = "SET_USER_IMAGE";

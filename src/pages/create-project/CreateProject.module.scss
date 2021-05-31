@@ -1,0 +1,20 @@
+@import "../../variables.scss";
+
+.create-project-main {
+  .top-content {
+    padding-top: 1rem;
+  }
+
+  .create-project-form-container {
+    min-height: 75%;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .project-logo-input {
+      padding: 1rem;
+      align-self: center;
+    }
+  }
+}
