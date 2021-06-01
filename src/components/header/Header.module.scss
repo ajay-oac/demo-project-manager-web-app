@@ -44,8 +44,10 @@ header {
         width: 168px;
         padding: 0.5rem 0px;
         overflow: hidden;
+        background-color: white;
 
         li {
+          text-align: center;
           font-size: 14px;
           padding: 1rem;
           cursor: pointer;

@@ -1,0 +1,52 @@
+@import "../../variables.scss";
+
+.overlay {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal-container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 150;
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal {
+    padding: 2rem;
+    background-color: white;
+    max-width: 500px;
+
+    div:first-child {
+      width: 100%;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    div:last-child {
+      width: 100%;
+      padding-top: 2rem;
+      display: flex;
+      justify-content: flex-end;
+
+      button:first-child {
+        background: $text-color-1;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
