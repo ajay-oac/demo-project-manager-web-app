@@ -4,6 +4,7 @@ import classes from "./Home.module.scss";
 import { connect } from "react-redux";
 import { loadProjects } from "../../store/project/projectActionCreators.js";
 import { useHistory } from "react-router";
+import List from "../../components/list/List.js";
 
 const Home = (props) => {
   const history = useHistory();
@@ -17,13 +18,7 @@ const Home = (props) => {
   if (props.projects.length) {
     mainClasses = "";
 
-    projects = (
-      <Fragment>
-        {props.projects.map((project) => (
-          <p key={project.id}>{project.projectName}</p>
-        ))}
-      </Fragment>
-    );
+    projects = <List items={props.projects} />;
   } else {
     mainClasses = `flex ${classes["no-projects-main"]}`;
 

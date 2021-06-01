@@ -142,10 +142,13 @@ const CreateProject = (props) => {
       projectManager: createProjectFormState.projectManager,
       clientName: createProjectFormState.clientName,
       numberOfMembers: createProjectFormState.numberOfMembers,
+      projectImage: createProjectFormState.projectImage,
     };
 
     const successfullyCreated = await props.addProject(newProject);
     if (successfullyCreated) history.replace("/");
+
+    //wrap in try catch and handle error case.
   };
 
   return (

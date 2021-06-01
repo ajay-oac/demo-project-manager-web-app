@@ -1,0 +1,84 @@
+@import "../../variables.scss";
+
+.list {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  list-style: none;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0px 1px 4px $box-shadow-color;
+
+  li {
+    display: flex;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &:first-child {
+      min-height: 45px;
+      background-color: whitesmoke;
+
+      div {
+        font-size: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+
+    &:not(:first-child) {
+      transition: background-color 0.3s ease-in-out;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.018);
+      }
+    }
+
+    div {
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 128px;
+
+      div {
+        width: 45px;
+        height: 45px;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: whitesmoke;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+    }
+
+    div:not(:first-child) {
+      flex-basis: 20%;
+      flex-grow: 1;
+    }
+
+    .details {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    div:last-child {
+      justify-content: space-around;
+
+      div {
+        flex-basis: 50%;
+        padding: 0px 0.5rem;
+      }
+    }
+  }
+}
