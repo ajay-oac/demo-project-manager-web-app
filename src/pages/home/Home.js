@@ -39,7 +39,7 @@ const Home = (props) => {
       {projects}
       <div className={classes["add-project-button"]}>
         <Button
-          label="&#10010;"
+          label={<i className="fa fa-plus"></i>}
           buttonType="circular"
           size="65px"
           fontSize="40px"
