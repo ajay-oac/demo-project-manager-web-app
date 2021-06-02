@@ -28,7 +28,6 @@ const List = (props) => {
   };
 
   const deleteProject = async () => {
-    console.log("current delete id is : ", currentDeleteId);
     const deletionWasSuccess = await props.deleteProject(currentDeleteId);
     if (deletionWasSuccess) toggleDeleteConfirmationModal(false);
   };

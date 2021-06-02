@@ -12,8 +12,4 @@ const middlewares = applyMiddleware(thunk);
 
 const store = createStore(rootReducer, middlewares);
 
-store.subscribe(() => {
-  console.log(store.getState().projects);
-});
-
 export default store;

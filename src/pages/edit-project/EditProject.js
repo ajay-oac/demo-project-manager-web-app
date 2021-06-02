@@ -23,12 +23,6 @@ const EditProject = (props) => {
     },
   });
 
-  console.log(
-    props.getProject(params.projectId),
-    "editProjectFormState is: ",
-    editProjectFormState
-  );
-
   const history = useHistory();
 
   const handleImageUpload = (image) => {
@@ -129,10 +123,6 @@ const EditProject = (props) => {
   };
 
   const checkButtonDisabled = () => {
-    console.log(
-      "came in checkButtonDisabled...",
-      editProjectFormState.projectName
-    );
     return editProjectFormState.projectName &&
       editProjectFormState.projectManager &&
       editProjectFormState.clientName &&
@@ -245,7 +235,6 @@ const mapStateToProps = (state) => {
   return {
     getProject: (projectId) =>
       state.project.projects.find((project) => {
-        console.log(project.id == projectId, project.id, projectId);
         return project.id == projectId;
       }),
   };

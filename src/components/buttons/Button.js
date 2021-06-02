@@ -2,7 +2,6 @@ import React, { Fragment, memo } from "react";
 import classes from "./Button.module.scss";
 
 const Button = (props) => {
-  console.log("rendering button...");
   let buttonStyles = null;
   switch (props.buttonType) {
     case "pill":
