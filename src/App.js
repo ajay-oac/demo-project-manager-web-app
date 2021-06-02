@@ -7,6 +7,7 @@ import Login from "./pages/login/login.js";
 import Home from "./pages/home/Home.js";
 import Header from "./components/header/Header.js";
 import CreateProject from "./pages/create-project/CreateProject";
+import EditProject from "./pages/edit-project/EditProject";
 
 function App(props) {
   const location = useLocation();
@@ -40,6 +41,9 @@ function App(props) {
         </Route>
         <Route path="/create-project" exact>
           {checkAuthAndRoute(CreateProject, null)}
+        </Route>
+        <Route path="/edit-project/:projectId" exact>
+          {checkAuthAndRoute(EditProject, null)}
         </Route>
         <Route path="/login" exact>
           <Login />

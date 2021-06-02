@@ -24,6 +24,16 @@ const projectReducer = (state = initialProjects, { type, payload }) => {
           (project) => project.id !== payload.projectId
         ),
       };
+    case projectActions.UPDATE_PROJECT:
+      const updateIndex = state.projects.findIndex(
+        (project) => project.id === payload.updatedProject.id
+      );
+      const projects = [...state.projects];
+      projects.splice(updateIndex, 1, payload.updatedProject);
+      return {
+        ...state,
+        projects,
+      };
     default:
       return state;
   }

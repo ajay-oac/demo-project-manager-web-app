@@ -35,7 +35,7 @@ const ImageInput = (props) => {
   } else {
     image = (
       <div className={classes["default-image"]}>
-        <img src="images/image-upload.png" alt="default upload icon" />
+        <img src="/images/image-upload.png" alt="default upload icon" />
         <span>Upload Project Image</span>
       </div>
     );

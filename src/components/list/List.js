@@ -5,6 +5,7 @@ import classes from "./List.module.scss";
 import { connect } from "react-redux";
 import { deleteProject } from "../../store/project/projectActionCreators.js";
 import ConfirmationModal from "../confirmation-modal/ConfirmationModal.js";
+import { useHistory } from "react-router";
 
 const List = (props) => {
   const [
@@ -13,6 +14,10 @@ const List = (props) => {
   ] = useState(false);
 
   const [currentDeleteId, setCurrentDeleteId] = useState(null);
+
+  const history = useHistory();
+
+  const toEditPage = (projectId) => history.push(`/edit-project/${projectId}`);
 
   const toggleDeleteConfirmationModal = (
     shouldShow,
@@ -60,7 +65,11 @@ const List = (props) => {
       </div>
       <div>
         <div>
-          <Button buttonType="pill" label={editButtonLabel} />
+          <Button
+            buttonType="pill"
+            label={editButtonLabel}
+            onClickHandler={() => toEditPage(item.id)}
+          />
         </div>
         <div>
           <Button

@@ -53,3 +53,20 @@ export const deleteProject = (projectId) => {
     });
   };
 };
+
+export const updateProject = (updatedProject) => {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      // Call the backend API to update project in the database and in succes do following.
+      // Hardcoding the success case for now.
+      const callToApiSuccessfull = true;
+      if (callToApiSuccessfull) {
+        dispatch({
+          type: projectActions.UPDATE_PROJECT,
+          payload: { updatedProject },
+        });
+        resolve(true);
+      } else reject(false);
+    });
+  };
+};
