@@ -1,19 +1,25 @@
-import React, { useCallback, useReducer } from "react";
+import React from "react";
 import Button from "../../components/buttons/Button";
 import classes from "../create-project/CreateProject.module.scss";
 import ImageInput from "../../components/inputs/ImageInput.js";
 import FormWrapper from "../../components/form/FormWrapper.js";
 import TextInput from "../../components/inputs/TextInput.js";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import { connect } from "react-redux";
 import { updateProject } from "../../store/project/projectActionCreators.js";
-import * as projectFormActions from "../../utilities/project-form/projectFormActions.js";
-import { projectFormReducer } from "../../utilities/project-form/projectFormReducer.js";
+import useProjectForm from "../../hooks/useProjectForm.js";
 
 const EditProject = (props) => {
   const params = useParams();
 
-  const [editProjectFormState, dispatch] = useReducer(projectFormReducer, {
+  const {
+    projectFormState,
+    handleImageUpload,
+    fieldChangeHandler,
+    buttonDisabledStatus,
+    toPreviousPage,
+    history,
+  } = useProjectForm({
     ...props.getProject(params.projectId),
     errors: {
       projectName: "",
@@ -23,131 +29,16 @@ const EditProject = (props) => {
     },
   });
 
-  const history = useHistory();
-
-  const handleImageUpload = (image) => {
-    dispatch({ type: projectFormActions.SET_PROJECT_IMAGE, payload: image });
-  };
-
-  const fieldChangeHandler = ({ target }) => {
-    const fieldValue = target.value;
-
-    const updateStore = (
-      actionType,
-      shouldSetError,
-      errorActionType,
-      errorMessage
-    ) => {
-      dispatch({ type: actionType, payload: fieldValue });
-      if (shouldSetError)
-        dispatch({ type: errorActionType, payload: errorMessage });
-      else dispatch({ type: errorActionType, payload: "" });
-    };
-
-    switch (target.id) {
-      case "project-name":
-        if (fieldValue)
-          updateStore(
-            projectFormActions.SET_PROJECT_NAME,
-            false,
-            projectFormActions.SET_PROJECT_NAME_ERROR,
-            ""
-          );
-        else
-          updateStore(
-            projectFormActions.SET_PROJECT_NAME,
-            true,
-            projectFormActions.SET_PROJECT_NAME_ERROR,
-            "This field is required."
-          );
-        break;
-      case "project-manager":
-        if (fieldValue)
-          updateStore(
-            projectFormActions.SET_PROJECT_MANAGER,
-            false,
-            projectFormActions.SET_PROJECT_MANAGER_ERROR,
-            ""
-          );
-        else
-          updateStore(
-            projectFormActions.SET_PROJECT_MANAGER,
-            true,
-            projectFormActions.SET_PROJECT_MANAGER_ERROR,
-            "This field is required."
-          );
-        break;
-      case "client-name":
-        if (fieldValue)
-          updateStore(
-            projectFormActions.SET_CLIENT_NAME,
-            false,
-            projectFormActions.SET_CLIENT_NAME_ERROR,
-            ""
-          );
-        else
-          updateStore(
-            projectFormActions.SET_CLIENT_NAME,
-            true,
-            projectFormActions.SET_CLIENT_NAME_ERROR,
-            "This field is required."
-          );
-        break;
-      case "number-of-members":
-        if (fieldValue) {
-          if (fieldValue > 0)
-            updateStore(
-              projectFormActions.SET_NUMBER_OF_MEMBERS,
-              false,
-              projectFormActions.SET_NUMBER_OF_MEMBERS_ERROR,
-              ""
-            );
-          else
-            updateStore(
-              projectFormActions.SET_NUMBER_OF_MEMBERS,
-              true,
-              projectFormActions.SET_NUMBER_OF_MEMBERS_ERROR,
-              "AT least one member is required."
-            );
-        } else
-          updateStore(
-            projectFormActions.SET_NUMBER_OF_MEMBERS,
-            true,
-            projectFormActions.SET_NUMBER_OF_MEMBERS_ERROR,
-            "This field is required."
-          );
-        break;
-      default:
-        return;
-    }
-  };
-
-  const checkButtonDisabled = () => {
-    return editProjectFormState.projectName &&
-      editProjectFormState.projectManager &&
-      editProjectFormState.clientName &&
-      editProjectFormState.numberOfMembers &&
-      !editProjectFormState.errors.projectName &&
-      !editProjectFormState.errors.projectManager &&
-      !editProjectFormState.errors.clientName &&
-      !editProjectFormState.errors.numberOfMembers
-      ? false
-      : true;
-  };
-  const buttonDisabledStatus = checkButtonDisabled();
-
-  const toPreviousPage = useCallback(() => history.goBack(), [history]);
-
   const updateProject = async (event) => {
     event.preventDefault();
 
     const updatedProject = {
-      id: editProjectFormState.id,
-      projectName: editProjectFormState.projectName,
-      projectManager: editProjectFormState.projectManager,
-      clientName: editProjectFormState.clientName,
-      numberOfMembers: editProjectFormState.numberOfMembers,
-      projectImage: editProjectFormState.projectImage,
+      id: projectFormState.id,
+      projectName: projectFormState.projectName,
+      projectManager: projectFormState.projectManager,
+      clientName: projectFormState.clientName,
+      numberOfMembers: projectFormState.numberOfMembers,
+      projectImage: projectFormState.projectImage,
     };
 
     const successfullyUpdated = await props.updateProject(updatedProject);
@@ -169,7 +60,7 @@ const EditProject = (props) => {
       <div className={classes["create-project-form-container"]}>
         <ImageInput
           size="450px"
-          image={editProjectFormState.projectImage}
+          image={projectFormState.projectImage}
           onChangeHandler={handleImageUpload}
         />
         <FormWrapper
@@ -182,36 +73,36 @@ const EditProject = (props) => {
             type="text"
             label="Project Name"
             hideLabel={true}
-            value={editProjectFormState.projectName}
+            value={projectFormState.projectName}
             onChangeHandler={fieldChangeHandler}
-            error={editProjectFormState.errors.projectName}
+            error={projectFormState.errors.projectName}
           />
           <TextInput
             id="project-manager"
             type="text"
             label="Project Manager"
             hideLabel={true}
-            value={editProjectFormState.projectManager}
+            value={projectFormState.projectManager}
             onChangeHandler={fieldChangeHandler}
-            error={editProjectFormState.errors.projectManager}
+            error={projectFormState.errors.projectManager}
           />
           <TextInput
             id="client-name"
             type="text"
             label="Client Name"
             hideLabel={true}
-            value={editProjectFormState.clientName}
+            value={projectFormState.clientName}
             onChangeHandler={fieldChangeHandler}
-            error={editProjectFormState.errors.clientName}
+            error={projectFormState.errors.clientName}
           />
           <TextInput
             id="number-of-members"
             type="number"
             label="Number of Members"
             hideLabel={true}
-            value={editProjectFormState.numberOfMembers}
+            value={projectFormState.numberOfMembers}
             onChangeHandler={fieldChangeHandler}
-            error={editProjectFormState.errors.numberOfMembers}
+            error={projectFormState.errors.numberOfMembers}
           />
           <Button
             label="submit"
