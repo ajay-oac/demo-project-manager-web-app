@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import Button from "../../components/buttons/Button.js";
 import classes from "./Home.module.scss";
 import { connect } from "react-redux";
