@@ -14,7 +14,11 @@ const UserIcon = (props) => {
       onClick={props.onClickHandler}
     >
       <img
-        src={props.userImage || "images/default-user-image.png"}
+        src={
+          props.userImage
+            ? `data:image/png;base64,${props.userImage}`
+            : "images/default-user-image.png"
+        }
         alt="user icon"
       />
     </div>

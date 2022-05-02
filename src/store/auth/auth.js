@@ -1,33 +1,25 @@
 import * as authActions from "./authActions.js";
 
+const { SET_ACCESS_TOKEN, SET_USER_DETAILS } = authActions;
+
 const initialAuthState = {
   username: "",
   isAuthenticated: false,
-  authToken: "",
+  accessToken: "",
   userImage: "",
+  error: "",
 };
 
 const authReducer = (state = initialAuthState, { type, payload }) => {
   switch (type) {
-    case authActions.SET_USERNAME:
+    case SET_USER_DETAILS:
       return {
-        ...state,
-        username: payload.username,
+        ...payload,
       };
-    case authActions.SET_AUTH_TOKEN:
+    case SET_ACCESS_TOKEN:
       return {
         ...state,
-        authToken: payload.authToken,
-      };
-    case authActions.SET_IS_AUTHENTICATED:
-      return {
-        ...state,
-        isAuthenticated: payload.isAuthenticated,
-      };
-    case authActions.SET_USER_IMAGE:
-      return {
-        ...state,
-        userImage: payload.userImage,
+        accessToken: payload,
       };
     default:
       return state;

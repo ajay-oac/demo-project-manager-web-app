@@ -20,5 +20,10 @@
   .login-form {
     width: 45%;
     height: 25rem;
+
+    .error-message {
+      font-size: 12px;
+      color: rgb(244, 67, 54);
+    }
   }
 }

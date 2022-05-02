@@ -1,45 +1,47 @@
 import React, { Fragment, useState } from "react";
 import TextInput from "../../components/inputs/TextInput.js";
 import Button from "../../components/buttons/Button.js";
-import { useHistory } from "react-router";
 import { connect } from "react-redux";
-import * as authActions from "../../store/auth/authActions.js";
+import { login } from "../../store/auth/authActionCreators.js";
+import { getLoginErrorFromAuth } from "../../store/auth/authSelectors";
 import FormWrapper from "../../components/form/FormWrapper.js";
 import classes from "./login.module.scss";
 
-const Login = (props) => {
-  const history = useHistory();
-
+const Login = ({ login, loginErrorMessage }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setError] = useState({ username: "", password: "" });
+  const [errors, setErrors] = useState({ username: "", password: "" });
+  const [hasSignInButtonBeenClicked, setHasSignInButtonBeenClicked] =
+    useState(false);
 
   const nameChangeHandler = ({ target }) => {
     setUsername(target.value);
+    hasSignInButtonBeenClicked &&
+      setErrors((errors) => ({
+        ...errors,
+        username: target.value ? "" : "Username is required.",
+      }));
   };
 
   const passwordChangeHandler = ({ target }) => {
     setPassword(target.value);
+    hasSignInButtonBeenClicked &&
+      setErrors((errors) => ({
+        ...errors,
+        password: target.value ? "" : "Password is required.",
+      }));
   };
 
   const validateCredentials = (event) => {
     event.preventDefault();
 
-    // Send request to backend and if successfull do following
-    // Hardcoding success and failure cases for now. Implement in then and catch of returning promise from the API
-    if (username === "test" && password === "test") {
-      setError({ username: "", password: "" });
-      props.setUsername("TEST USER");
-      props.setAuthToken("TEST TOKEN");
-      props.setIsAuthenticated(true);
-      history.replace("/");
-    } else {
-      // Hardcoding the error for now. Set the error to the error returned from API.
-      setError({
-        username: "Username is incorrect!",
-        password: "Password is incorrect!",
-      });
-    }
+    !hasSignInButtonBeenClicked && setHasSignInButtonBeenClicked(true);
+
+    if (!username)
+      setErrors((errors) => ({ ...errors, username: "Username is required." }));
+    else if (!password)
+      setErrors((errors) => ({ ...errors, password: "Password is required." }));
+    else login(username, password);
   };
 
   return (
@@ -71,6 +73,11 @@ const Login = (props) => {
               onChangeHandler={passwordChangeHandler}
               error={errors.password}
             />
+            {loginErrorMessage && (
+              <span className={classes["error-message"]}>
+                {loginErrorMessage}
+              </span>
+            )}
             <Button
               type="submit"
               label="sign in"
@@ -84,20 +91,12 @@ const Login = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setUsername: (username) =>
-      dispatch({ type: authActions.SET_USERNAME, payload: { username } }),
-    setUserImage: (userImage) =>
-      dispatch({ type: authActions.SET_USER_IMAGE, payload: { userImage } }),
-    setAuthToken: (authToken) =>
-      dispatch({ type: authActions.SET_AUTH_TOKEN, payload: { authToken } }),
-    setIsAuthenticated: (isAuthenticated) =>
-      dispatch({
-        type: authActions.SET_IS_AUTHENTICATED,
-        payload: { isAuthenticated },
-      }),
-  };
-};
+const mapStateToProps = (state) => ({
+  loginErrorMessage: getLoginErrorFromAuth(state),
+});
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch) => ({
+  login: (username, password) => dispatch(login(username, password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
