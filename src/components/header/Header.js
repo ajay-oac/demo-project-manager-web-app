@@ -5,16 +5,8 @@ import UserIcon from "../user-icon/UserIcon.js";
 const Header = (props) => {
   const [showUserActions, setShowUserActions] = useState(false);
 
-  const toggleUserActions = () => {
+  const toggleUserActions = () =>
     setShowUserActions((currentStatus) => !currentStatus);
-  };
-
-  // Call the backend API to fetch user image if the image is not passed as prop.
-  useEffect(() => {
-    if (!props.userImage) {
-      // If API returns an image set it in the state and pass it as prop to UserIcon component.
-    }
-  }, [props.userImage]);
 
   return (
     <header>
