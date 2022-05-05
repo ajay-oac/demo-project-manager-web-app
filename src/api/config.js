@@ -1,7 +1,7 @@
 import { SET_ACCESS_TOKEN, SET_USER_DETAILS } from "../store/auth/authActions";
 import store from "../store/store";
 
-const baseUrl = "http://ec2-35-86-96-247.us-west-2.compute.amazonaws.com/api/v1";
+const baseUrl = "/api/v1";
 const tokenRefreshUrl = "/auth/refresh";
 
 const fetchWrapper = async (
