@@ -27,6 +27,7 @@ function App({ userDetails, logout }) {
   }, [isAuthenticated]);
 
   const logoutUser = () => logout();
+  console.log("this is test console");
 
   const checkAuthAndRoute = (Comp, compProps) =>
     isAuthenticated ? <Comp {...compProps} /> : <Redirect to="/login" />;
